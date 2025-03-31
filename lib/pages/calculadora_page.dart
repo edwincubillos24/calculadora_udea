@@ -7,6 +7,8 @@ class CalculadoraPage extends StatefulWidget {
   State<CalculadoraPage> createState() => _CalculadoraPageState();
 }
 
+enum Operacion { sumar, restar, multiplicar, dividir }
+
 class _CalculadoraPageState extends State<CalculadoraPage> {
   int _total = 0;
   final _numero1 = TextEditingController();
@@ -24,6 +26,12 @@ class _CalculadoraPageState extends State<CalculadoraPage> {
         child: Center(
           child: Column(
             children: [
+              Image(
+                image: AssetImage('assets/images/logo.png'),
+                width: 150,
+                height: 150,
+              ),
+              const SizedBox(height: 64.0),
               TextFormField(
                 controller: _numero1,
                 decoration: const InputDecoration(
@@ -32,9 +40,7 @@ class _CalculadoraPageState extends State<CalculadoraPage> {
                 ),
                 keyboardType: TextInputType.number,
               ),
-              const SizedBox(
-                height: 16.0,
-              ),
+              const SizedBox(height: 16.0),
               TextFormField(
                 controller: _numero2,
                 decoration: const InputDecoration(
@@ -43,17 +49,80 @@ class _CalculadoraPageState extends State<CalculadoraPage> {
                 ),
                 keyboardType: TextInputType.number,
               ),
-              const SizedBox(
-                height: 16.0,
+              const SizedBox(height: 16.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      _calcular(Operacion.sumar);
+                    },
+                    label: const Text("+"),
+                  ),
+                  const SizedBox(width: 16.0),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      _calcular(Operacion.restar);
+                    },
+                    label: const Text("-"),
+                  ),
+                  const SizedBox(width: 16.0),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      _calcular(Operacion.multiplicar);
+                    },
+                    label: const Text("*"),
+                  ),
+                  const SizedBox(width: 16.0),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      _calcular(Operacion.dividir);
+                    },
+                    label: const Text("/"),
+                  ),
+                ],
               ),
+              const SizedBox(height: 16.0),
               Text(
                 "El total es $_total",
-                style: const TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
+                style: const TextStyle(
+                  fontSize: 30,
+                  fontStyle: FontStyle.italic,
+                ),
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  void _calcular(Enum operacion) {
+    setState(() {
+      switch (operacion) {
+        case Operacion.sumar:
+          _total = int.parse(_numero1.text) + int.parse(_numero2.text);
+          break;
+        case Operacion.restar:
+          _total = int.parse(_numero1.text) - int.parse(_numero2.text);
+          break;
+        case Operacion.multiplicar:
+          _total = int.parse(_numero1.text) * int.parse(_numero2.text);
+          break;
+        default:
+          _total = int.parse(_numero1.text) ~/ int.parse(_numero2.text);
+          break;
+      }
+
+      /*if (operacion == Operacion.sumar) {
+        _total = int.parse(_numero1.text) + int.parse(_numero2.text);
+      } else if (operacion == Operacion.restar) {
+        _total = int.parse(_numero1.text) - int.parse(_numero2.text);
+      } else if (operacion == Operacion.multiplicar) {
+        _total = int.parse(_numero1.text) * int.parse(_numero2.text);
+      } else {
+        _total = int.parse(_numero1.text) ~/ int.parse(_numero2.text);
+      }*/
+    });
   }
 }

@@ -1,4 +1,4 @@
-import 'package:calculadora_udea/pages/calculadora_page.dart';
+import 'package:calculadora_udea/pages/splash_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,8 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.limeAccent),
       ),
-      home: const CalculadoraPage(),
+      home: const SplashPage(),
     );
   }
 }
-
